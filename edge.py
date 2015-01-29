@@ -14,6 +14,14 @@ class Edge(object):
         check_direct = self.source == other.source and self.target == other.target
         return check_direct and (self.props == other.props)
 
+    # set property
+    def set_prop(self, key, val):
+        self.props['key'] = val
+
+    # get property
+    def get_prop(self, key):
+        return self.props.get(key)
+
     # add to node
     def add_node(self, node):
         node.add_edge(self)
