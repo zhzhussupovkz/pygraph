@@ -7,11 +7,19 @@ class Edge(object):
         self.props = props
         self.source = source
         self.target = target
-        self.add_node(self.source)
-        self.add_node(self.target)
+
+        if self.source:
+            self.add_node(self.source)
+
+        if self.target:
+            self.add_node(self.target)
 
     def __eq__(self, other):
-        check_direct = self.source == other.source and self.target == other.target
+        check_direct = False
+        if self.source and other.source:
+            check_direct = self.source == other.source
+        if self.target and other.target:
+            check_direct = check_direct and self.source == other.source
         return check_direct and (self.props == other.props)
 
     # set property

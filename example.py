@@ -11,6 +11,7 @@ designer = Node(name  = "designer")
 edge1 = Edge(source=admin, target=programmer)
 edge2 = Edge(source=admin, target=designer)
 edge3 = Edge(source=admin, target=programmer)
+edge4 = Edge(source=designer)
 
 new_admin = Node(name = "new admin")
 
@@ -40,11 +41,14 @@ print designer.deg
 print designer.get_neighbors()
 print designer.get_edges()
 
-v = [admin, programmer, designer]
-e = [edge1, edge2]
+e = [edge1, edge2, edge4]
 
 # create newgraph
-myG = Graph(v, e)
+myG = Graph(e)
+boxer = Node(name="Boxer")
+myG.add_node(boxer)
+myG.add_edge(source = boxer)
+
 print "\n myG"
 print myG.nodes
 print myG.edges

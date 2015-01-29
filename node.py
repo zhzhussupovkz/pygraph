@@ -96,8 +96,12 @@ class Node(object):
 
     # check if edge from self
     def is_edge_from(self, edge):
-        return (edge.source == self)
+        if edge.source:
+            return (edge.source == self)
+        return False
 
     # check if edge to self
     def is_edge_to(self, edge):
-        return (edge.target == self)
+        if edge.target:
+            return (edge.target == self)
+        return False

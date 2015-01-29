@@ -5,12 +5,16 @@ from node import *
 # graph
 class Graph(object):
 
-    def __init__(self, nodes = [], edges = []):
+    def __init__(self, edges = []):
         # nodes
-        self.nodes = nodes
+        self.nodes = set()
 
         # edges
         self.edges = edges
+        for k in edges:
+            self.nodes.add(k.source)
+            self.nodes.add(k.target)
+        self.nodes = filter(None, list(self.nodes))
 
     # is complete
     def is_complete(self):
@@ -55,7 +59,11 @@ class Graph(object):
         self.nodes.remove(node)
 
     # add edge
-    def add_edge(self, source, target):
+    def add_edge(self, source = None, target = None):
+        if source and source not in self.nodes:
+            self.nodes.append(source)
+        if target and target not in self.nodes:
+            self.nodes.append(target)
         edge = Edge(source, target)
         self.edges.append(edge)
 
