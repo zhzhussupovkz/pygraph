@@ -45,9 +45,6 @@ e = [edge1, edge2, edge4]
 
 # create newgraph
 myG = Graph(e)
-boxer = Node(name="Boxer")
-myG.add_node(boxer)
-myG.add_edge(source = boxer)
 
 print "\n myG"
 print myG.nodes

@@ -31,7 +31,7 @@ class Graph(object):
         n_count = len(self.nodes)
         e_count = len(self.edges)
         if e_count > 1 and n_count > 1:
-            im = [[1 if n.has_edge_from_node(k) else -1 for n in self.nodes] for k in self.nodes]
+            im = [[1 if n.is_neighbor(k) else 0 for n in self.nodes] for k in self.nodes]
         return im
 
     # get incidence matrix
@@ -70,3 +70,21 @@ class Graph(object):
     # delete edge from graph
     def delete_edge(self, edge):
         self.edges.remove(edge)
+
+    # depth-first search
+    def dfs(self, start):
+        inc = []
+        for i in range(0, len(self.nodes)):
+            current_inc = []
+            for j in range(0, len(self.nodes)):
+                if i != j and self.nodes[i].is_neighbor(self.nodes[j]):
+                    current_inc.append(j)
+            inc.append(current_inc)
+
+        visited, stack = set(), [self.nodes.index(start)]
+        while stack:
+            vertex = stack.pop()
+            if vertex not in visited:
+                visited.add(vertex)
+                stack.extend(set(inc[vertex]) - visited)
+        return [self.nodes[v] for v in visited]
