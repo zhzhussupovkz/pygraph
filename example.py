@@ -48,6 +48,8 @@ myG = Graph(v, e)
 print "\n myG"
 print myG.nodes
 print myG.edges
+print myG.incidence_matrix()
+print myG.adjacency_matrix()
 
 for k in myG.nodes:
     print k.get_prop('name')

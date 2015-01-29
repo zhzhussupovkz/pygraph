@@ -80,12 +80,24 @@ class Node(object):
 
     # check if another node is neighbor
     def is_neighbor(self, node):
-        if (node in self.neighbors.get('from') or node in self.neighbors.get('to')):
-            return True
-        return False
+        return (node in self.neighbors.get('from') or node in self.neighbors.get('to'))
 
-    # check if have edge
-    def exists_edge(self, edge):
-        if (edge in self.edges):
-            return True
-        return False
+    # check if current node has edge to another
+    def has_edge_to_node(self, node):
+        return node in self.neighbors.get('from')
+
+    # check if another node has edge to self
+    def has_edge_from_node(self, node):
+        return node in self.neighbors.get('to')
+
+    # check if edge exists
+    def has_edge(self, edge):
+        return (edge in self.edges)
+
+    # check if edge from self
+    def is_edge_from(self, edge):
+        return (edge.source == self)
+
+    # check if edge to self
+    def is_edge_to(self, edge):
+        return (edge.target == self)
