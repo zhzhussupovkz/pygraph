@@ -4,8 +4,7 @@
 class Edge(object):
 
     # create edge from source key to target key with props
-    def __init__(self, source, target, props = {}):
-        self.props = props
+    def __init__(self, source, target):
         self.source = source
         self.target = target
 
@@ -19,10 +18,5 @@ class Edge(object):
     def __hash__(self):
         return hash((self.source, self.target))
 
-    # set property
-    def set_prop(self, key, val):
-        self.props[key] = val
-
-    # get property
-    def get_prop(self, key):
-        return self.props.get(key)
+    def __str__(self):
+        return str(self.source) + '=>' + str(self.target)

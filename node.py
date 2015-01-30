@@ -4,11 +4,10 @@
 class Node(object):
 
     # create node with key and props
-    def __init__(self, key, props = {}):
+    def __init__(self, key):
         self.deg = 0
         self.key = key
         self.neighbors = set()
-        self.props = {}
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -18,13 +17,8 @@ class Node(object):
     def __hash__(self):
         return hash(self.key)
 
-    # set property
-    def set_prop(self, key, val):
-        self.props[key] = val
-
-    # get property
-    def get_prop(self, key):
-        return self.props.get(key)
+    def __str__(self):
+        return str({ "key" : self.key, "deg" : self.deg, "neighbors" : [n.key for n in self.neighbors]})
 
     # get neighbors
     def get_neighbors(self):
