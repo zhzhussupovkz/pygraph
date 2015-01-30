@@ -122,3 +122,39 @@ class Graph(object):
                 if n == t and s in n.neighbors:
                     n.neighbors.remove(s)
                     n.deg -= 1
+
+    # incidence representation
+    def inc(self):
+        graph = {}
+        for n in self.nodes:
+            graph[n.key] = set(i.key for i in n.neighbors)
+        return graph
+
+    # depth-first search
+    def dfs(self, start):
+        visited = set()
+        if Node(key = start) in self.nodes:
+            graph = self.inc()
+            stack = [start]
+            while stack:
+                node = stack.pop()
+                if node not in visited:
+                    visited.add(node)
+                    stack.extend(graph[node] - visited)
+        return visited
+
+    # dfs paths from start to goal
+    def dfs_paths(self, start, goal):
+        result = []
+        if Node(start) in self.nodes and Node(goal) in self.nodes:
+            graph = self.inc()
+            stack = [(start, [start])]
+            while stack:
+                (vertex, path) = stack.pop()
+                for next in graph[vertex] - set(path):
+                    if next == goal:
+                        result.append(path + [next])
+                    else:
+                        stack.append((next, path + [next]))
+        return result
+
