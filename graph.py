@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from node import *
+from edge import *
 
 # graph
 class Graph(object):
@@ -10,11 +11,10 @@ class Graph(object):
         self.nodes = set()
 
         # edges
-        self.edges = edges
-        for k in edges:
-            self.nodes.add(k.source)
-            self.nodes.add(k.target)
-        self.nodes = filter(None, list(self.nodes))
+        self.edges = set(edges)
+
+        for e in edges:
+            self.add_edge(e)
 
     # is complete
     def is_complete(self):
@@ -27,64 +27,74 @@ class Graph(object):
 
     # get adjacency matrix
     def adjacency_matrix(self):
-        im = []
+        adm = []
         n_count = len(self.nodes)
         e_count = len(self.edges)
         if e_count > 1 and n_count > 1:
-            im = [[1 if n.is_neighbor(k) else 0 for n in self.nodes] for k in self.nodes]
-        return im
+            adm = [[1 if self.is_neighbor(n.key, k.key) else 0 for n in list(self.nodes)] for k in list(self.nodes)]
+        return adm
 
     # get incidence matrix
     def incidence_matrix(self):
-        im = [[0 for n in self.nodes] for k in self.edges]
+        edges = list(self.edges)
+        im = [[0 for n in list(self.nodes)] for k in edges]
         n_count = len(self.nodes)
         e_count = len(self.edges)
         if e_count > 1 and n_count > 1:
             for i in range(0, len(self.nodes)):
-                for j in range(0, len(self.edges)):
-                    if self.nodes[i].is_edge_from(self.edges[j]):
+                for j in range(0, len(edges)):
+                    if i == edges[j].source:
                         im[j][i] = 1
-                    elif self.nodes[i].is_edge_to(self.edges[j]):
+                    elif i == edges[j].target:
                         im[j][i] = -1
                     else:
                         im[j][i] = 0
         return im
 
+    # connect two nodes
+    def connect(self, source, target):
+        e = Edge(source, target)
+        self.add_edge(e)
+
+    # is neighbor
+    def is_neighbor(self, a, b):
+        if a == b:
+            return True
+        f = Edge(a, b)
+        t = Edge(b, a)
+        if f in self.edges or t in self.edges:
+            return True
+        return False
+
     # add node to graph
     def add_node(self, node):
-        self.nodes.append(node)
+        self.nodes.add(node.key)
+
+    # edge exist
+    def edge_exist(self, source, target):
+        if source == target:
+            return True
+        e = Edge(source, target)
+        if e in self.edges:
+            return True
+        return False
 
     # delete node from graph
-    def delete_node(self, node):
-        self.nodes.remove(node)
+    def delete_node(self, key):
+        self.nodes.remove(Node(key))
 
     # add edge
-    def add_edge(self, source = None, target = None):
-        if source and source not in self.nodes:
-            self.nodes.append(source)
-        if target and target not in self.nodes:
-            self.nodes.append(target)
-        edge = Edge(source, target)
-        self.edges.append(edge)
+    def add_edge(self, edge):
+        self.edges.add(edge)
+        s = Node(edge.source)
+        t = Node(edge.target)
+        s.neighbors.add(t)
+        s.deg += 1
+        t.deg += 1
+        t.neighbors.add(s)
+        self.nodes.add(s)
+        self.nodes.add(t)
 
     # delete edge from graph
     def delete_edge(self, edge):
         self.edges.remove(edge)
-
-    # depth-first search
-    def dfs(self, start):
-        inc = []
-        for i in range(0, len(self.nodes)):
-            current_inc = []
-            for j in range(0, len(self.nodes)):
-                if i != j and self.nodes[i].is_neighbor(self.nodes[j]):
-                    current_inc.append(j)
-            inc.append(current_inc)
-
-        visited, stack = set(), [self.nodes.index(start)]
-        while stack:
-            vertex = stack.pop()
-            if vertex not in visited:
-                visited.add(vertex)
-                stack.extend(set(inc[vertex]) - visited)
-        return [self.nodes[v] for v in visited]
