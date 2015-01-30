@@ -16,6 +16,9 @@ class Graph(object):
         for e in edges:
             self.add_edge(e)
 
+    def __str__(self):
+        return str(self.weighted_directed_graph())
+
     # is complete
     def is_complete(self):
         n_count = len(self.nodes)
@@ -130,6 +133,16 @@ class Graph(object):
             graph[n.key] = set(i.key for i in n.neighbors)
         return graph
 
+    # weighted directed graph
+    def weighted_directed_graph(self):
+        graph = {}
+        for e in self.edges:
+            if e.source not in graph:
+                graph[e.source] = {e.target : e.weight}
+            else:
+                graph[e.source].update({e.target : e.weight})
+        return graph
+
     # depth-first search
     def dfs(self, start):
         visited = set()
@@ -150,11 +163,10 @@ class Graph(object):
             graph = self.inc()
             stack = [(start, [start])]
             while stack:
-                (vertex, path) = stack.pop()
-                for next in graph[vertex] - set(path):
-                    if next == goal:
-                        result.append(path + [next])
+                (node, path) = stack.pop()
+                for n in graph[node] - set(path):
+                    if n == goal:
+                        result.append(path + [n])
                     else:
-                        stack.append((next, path + [next]))
+                        stack.append((n, path + [n]))
         return result
-

@@ -2,26 +2,28 @@
 
 from graph import *
 
-edges = [Edge(0,1), Edge(0,2), Edge(2,3), Edge(3,1), Edge(3,0), Edge(1,4)]
+edges = [Edge(0,1,10), Edge(0,2,3), Edge(2,3,2), Edge(3,1,5), Edge(3,0,1), Edge(1,4,4)]
 myG = Graph(edges=edges)
-myG.add_edge(Edge(2, 5))
+myG.add_edge(Edge(2, 5, 1))
+myG.add_edge(Edge(1, 6, 2))
+myG.add_edge(Edge(6, 7, 3))
 
-print myG.adjacency_matrix()
-print myG.incidence_matrix()
+print "Graph:"
+print myG
 
+print "\nNodes:"
 for n in myG.nodes:
     print n
 
+print "\nEdges:"
 for e in myG.edges:
     print e
 
-print "\n"
+print "\nAdjacency matrix:"
+print myG.adjacency_matrix()
 
-for n in myG.nodes:
-    print "key:" + str(n.key)
-    print "deg:" + str(n.deg)
+print "\nIncidence matrix:"
+print myG.incidence_matrix()
 
-    print "neighbors"
-    for i in n.neighbors:
-        print i.key
-    print "\n"
+print "\nPaths from node 2 to 7:"
+print myG.dfs_paths(2, 7)
