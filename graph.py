@@ -2,7 +2,6 @@
 
 from node import *
 from edge import *
-from collections import defaultdict
 
 # graph
 class Graph(object):
@@ -18,7 +17,7 @@ class Graph(object):
             self.add_edge(e)
 
     def __str__(self):
-        return str(self.weighted_directed_graph())
+        return str({(e.source, e.target) : e.get_weight() for e in self.edges})
 
     # is complete
     def is_complete(self):
@@ -199,3 +198,27 @@ class Graph(object):
                     else:
                         queue.append((n, path + [n]))
         return result
+
+    # floyd-warshall
+    def floyd_warshall(self):
+        nodes = sorted([n.key for n in self.nodes])
+        n_count = len(nodes)
+        graph = [[float("inf") for n in range(n_count)] for n in range(n_count)]
+
+        for i in range(0, n_count):
+            for j in range(0, n_count):
+                for e in self.edges:
+                    if e.source == nodes[i] and e.target == nodes[j]:
+                        graph[i][j] = e.weight
+                    elif i == j:
+                        graph[i][j] = 0
+
+
+        for k in range(n_count):
+            for i in range(n_count):
+                for j in range(n_count):
+                    if(graph[i][j] > graph[i][k] + graph[k][j]):
+                        graph[i][j] = graph[i][k] + graph[k][j]
+
+        return graph
+

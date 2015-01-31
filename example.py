@@ -27,3 +27,6 @@ print myG.incidence_matrix()
 
 print "\nPaths from node 2 to 7:"
 print myG.dfs_paths(2, 7)
+
+print "\nfloyd warshall:"
+print myG.floyd_warshall()
