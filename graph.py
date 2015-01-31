@@ -217,27 +217,29 @@ class Graph(object):
     # bellman-ford alhorithm
     def bellman_ford(self, start):
         graph = self.weighted_directed_graph()
+        if graph.has_key(start):
 
-        dest = {}
-        path = {}
-        for node in graph:
-            dest[node] = float('Inf')
-            path[node] = None
-        dest[start] = 0
+            dest = {}
+            path = {}
+            for node in graph:
+                dest[node] = float('Inf')
+                path[node] = None
+            dest[start] = 0
 
-        for i in range(len(graph)-1):
-            for u in graph:
-                for v in graph[u]:
-                    if dest[u] + graph[u][v] < dest[v]:
-                        dest[v]  = dest[u] + graph[u][v]
-                        path[v] = u
+            for i in range(len(graph)-1):
+                for u in graph:
+                    for v in graph[u]:
+                        if dest[u] + graph[u][v] < dest[v]:
+                            dest[v]  = dest[u] + graph[u][v]
+                            path[v] = u
 
-        return dest, path
+            return dest, path
+        return None
 
     # find any path from start to finish
     def find_path(self, start, finish, path=[]):
         graph = self.weighted_directed_graph()
-        if Node(start) in self.nodes and Node(finish) in self.nodes:
+        if graph.has_key(start) and graph.has_key(finish):
             path = path + [start]
             if start == finish:
                 return path
