@@ -9,9 +9,6 @@ class Edge(object):
         self.target = target
         self.weight = weight
 
-    def set_weight(weight):
-        self.weight = weight
-
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             check_source = self.source == other.source
@@ -24,3 +21,9 @@ class Edge(object):
 
     def __str__(self):
         return str(self.source) + ' => ' + str({self.target : self.weight})
+
+    def set_weight(self, weight):
+        self.weight = weight
+
+    def get_weight(self):
+        return self.weight

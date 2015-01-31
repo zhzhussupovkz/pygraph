@@ -2,6 +2,7 @@
 
 from node import *
 from edge import *
+from collections import defaultdict
 
 # graph
 class Graph(object):
@@ -156,17 +157,45 @@ class Graph(object):
                     stack.extend(graph[node] - visited)
         return visited
 
-    # dfs paths from start to goal
-    def dfs_paths(self, start, goal):
+    # dfs paths from start to finish
+    def dfs_paths(self, start, finish):
         result = []
-        if Node(start) in self.nodes and Node(goal) in self.nodes:
+        if Node(start) in self.nodes and Node(finish) in self.nodes:
             graph = self.inc()
             stack = [(start, [start])]
             while stack:
                 (node, path) = stack.pop()
                 for n in graph[node] - set(path):
-                    if n == goal:
+                    if n == finish:
                         result.append(path + [n])
                     else:
                         stack.append((n, path + [n]))
+        return result
+
+    # breadth-first search
+    def bfs(self, start):
+        visited = set()
+        if Node(start) in self.nodes:
+            graph = self.inc()
+            queue = [start]
+            while queue:
+                node = queue.pop(0)
+                if node not in visited:
+                    visited.add(node)
+                    queue.extend(graph[node] - visited)
+        return visited
+
+    # bfs paths from start to finish
+    def bfs_paths(self, start, finish):
+        result = []
+        if Node(start) in self.nodes and Node(finish) in self.nodes:
+            graph = self.inc()
+            queue = [(start, [start])]
+            while queue:
+                (node, path) = queue.pop(0)
+                for n in graph[node] - set(path):
+                    if n == finish:
+                        result.append(path + [n])
+                    else:
+                        queue.append((n, path + [n]))
         return result
