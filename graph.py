@@ -139,6 +139,7 @@ class Graph(object):
         for e in self.edges:
             if e.source not in graph:
                 graph[e.source] = {e.target : e.weight}
+                graph[e.target] = {}
             else:
                 graph[e.source].update({e.target : e.weight})
         return graph
@@ -221,4 +222,24 @@ class Graph(object):
                         graph[i][j] = graph[i][k] + graph[k][j]
 
         return graph
+
+    # bellman-ford alhorithm
+    def bellman_ford(self, start):
+        graph = self.weighted_directed_graph()
+
+        dest = {}
+        path = {}
+        for node in graph:
+            dest[node] = float('Inf')
+            path[node] = None
+        dest[start] = 0
+
+        for i in range(len(graph)-1):
+            for u in graph:
+                for v in graph[u]:
+                    if dest[u] + graph[u][v] < dest[v]:
+                        dest[v]  = dest[u] + graph[u][v]
+                        path[v] = u
+
+        return dest, path
 
