@@ -19,15 +19,6 @@ class Graph(object):
     def __str__(self):
         return str({(e.source, e.target) : e.get_weight() for e in self.edges})
 
-    # is complete
-    def is_complete(self):
-        n_count = len(self.nodes)
-        e_count = len(self.edges)
-        check = n_count * (n_count -1)/2
-        if e_count == check:
-            return True
-        return False
-
     # get adjacency matrix
     def adjacency_matrix(self):
         adm = []
@@ -243,3 +234,16 @@ class Graph(object):
 
         return dest, path
 
+    # find any path from start to finish
+    def find_path(self, start, finish, path=[]):
+        graph = self.weighted_directed_graph()
+        if Node(start) in self.nodes and Node(finish) in self.nodes:
+            path = path + [start]
+            if start == finish:
+                return path
+            for node in graph[start]:
+                if node not in path:
+                    newpath = self.find_path(node, finish, path)
+                    if newpath:
+                        return newpath
+        return None

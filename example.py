@@ -35,3 +35,6 @@ print myG.floyd_warshall()
 
 print "\nbellman-ford:"
 print myG.bellman_ford('b')
+
+print "\nfind path from a to d:"
+print myG.find_path('a', 'd')
