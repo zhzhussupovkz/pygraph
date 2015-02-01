@@ -87,6 +87,7 @@ class Graph(object):
                     self.edges.remove(f)
                 if t in self.edges:
                     self.edges.remove(t)
+        return self
 
     # add edge
     def add_edge(self, edge):
@@ -102,6 +103,7 @@ class Graph(object):
             if n.key == edge.target:
                 n.neighbors.add(s)
                 n.deg += 1
+        return self
 
     # delete edge from graph
     def delete_edge(self, edge):
@@ -116,6 +118,7 @@ class Graph(object):
                 if n == t and s in n.neighbors:
                     n.neighbors.remove(s)
                     n.deg -= 1
+        return self
 
     # incidence representation
     def inc(self):

@@ -4,10 +4,10 @@ from graph import *
 
 edges = [Edge('a','b',10), Edge('a','c',3), Edge('c','d',2), Edge('d','b',5), Edge('d','a', 3), Edge('b', 'f',4)]
 myG = Graph(edges=edges)
-myG.add_edge(Edge('e', 'k', 1))
-myG.add_edge(Edge('b', 'k', 2))
-myG.add_edge(Edge('f', 'e', 3))
-myG.add_edge(Edge('e', 'c', 1))
+myG.add_edge(Edge('e', 'k', 1))\
+        .add_edge(Edge('b', 'k', 2))\
+        .add_edge(Edge('f', 'e', 3))\
+        .add_edge(Edge('e', 'c', 1))
 
 
 print "Graph:"
