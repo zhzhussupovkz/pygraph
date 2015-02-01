@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from graph import *
+from graph.graph import *
 
 edges = [Edge('a','b',10), Edge('a','c',3), Edge('c','d',2), Edge('d','b',5), Edge('d','a', 3), Edge('b', 'f',4)]
 myG = Graph(edges=edges)

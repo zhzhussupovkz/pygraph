@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import json
 from node import *
 from edge import *
 
@@ -252,3 +253,11 @@ class Graph(object):
                     if newpath:
                         return newpath
         return None
+
+    # to json
+    def to_json(self):
+        graph = {
+            'nodes' : [{"id" : n.key, "label" : n.key, "size" : n.deg} for n in self.nodes],
+            'edges' : [{"id" : str(e.source + e.target), "source" : e.source, "target" : e.target} for e in self.edges]
+        }
+        return json.dumps(graph)
