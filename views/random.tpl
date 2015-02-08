@@ -3,7 +3,7 @@
 <title>{{title}}</title>
 <style type="text/css">
   #container {
-    max-width: 800px;
+    max-width: 800;
     height: 600px;
     margin: auto;
   }
@@ -18,7 +18,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajax({
-            url: "/graph",
+            url: "/rgraph",
             type: "GET",
             success: function(data) {
                 var g = $.parseJSON(data)

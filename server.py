@@ -2,6 +2,7 @@
 
 from bottle import route, run, template, static_file
 from graph.graph import *
+import random
 
 @route('/static/:path#.+#', name='static')
 def static(path):
@@ -21,6 +22,25 @@ def graph():
             .add_edge(Edge('b', 'k', 2))\
             .add_edge(Edge('f', 'e', 3))\
             .add_edge(Edge('e', 'c', 1))
+    return myG.to_json()
+
+@route('/random')
+def get_random_graph():
+    data = {}
+    data['title'] = 'Random Graph'
+    return template('views/random', data)
+
+@route('/rgraph')
+def rgraph():
+    edges = []
+    labels = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f']
+    for i in range(1, 25):
+        s = labels[random.randint(0, 10)]
+        t = labels[random.randint(0, 10)]
+        w = random.randint(2, 10)
+        edges.append(Edge(str(s),str(t),w))
+
+    myG = Graph(edges=edges)
     return myG.to_json()
 
 run(host='localhost', port=8080)

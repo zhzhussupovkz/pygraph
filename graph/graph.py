@@ -258,6 +258,6 @@ class Graph(object):
     def to_json(self):
         graph = {
             'nodes' : [{"id" : n.key, "label" : n.key } for n in self.nodes],
-            'edges' : [{"from" : e.source, "to" : e.target} for e in self.edges]
+            'edges' : [{"from" : e.source, "to" : e.target, "label" : e.weight} for e in self.edges]
         }
         return json.dumps(graph)
