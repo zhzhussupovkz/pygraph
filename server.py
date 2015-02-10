@@ -12,6 +12,7 @@ def static(path):
 def graph():
     data = {}
     data['title'] = 'Graph'
+    data['header'] = 'PyGraph'
     return template('views/graph', data)
 
 @route('/graph')
@@ -28,6 +29,7 @@ def graph():
 def get_random_graph():
     data = {}
     data['title'] = 'Random Graph'
+    data['header'] = 'PyGraph'
     return template('views/random', data)
 
 @route('/rgraph')
