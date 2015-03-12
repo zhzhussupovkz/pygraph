@@ -74,6 +74,18 @@ class Graph(object):
             return True
         return False
 
+    # check if node is end vertex in graph
+    def is_end_vertex(self, node):
+        n = Node(node)
+        if n in self.nodes:
+            count = 0
+            for e in self.edges:
+                if e.source == node:
+                    count += 1
+            if count == 1:
+                return True
+        return False
+
     # delete node from graph
     def delete_node(self, key):
         node = Node(key)

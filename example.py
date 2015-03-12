@@ -7,7 +7,9 @@ myG = Graph(edges=edges)
 myG.add_edge(Edge('e', 'k', 1))\
         .add_edge(Edge('b', 'k', 2))\
         .add_edge(Edge('f', 'e', 3))\
-        .add_edge(Edge('e', 'c', 1))
+        .add_edge(Edge('e', 'c', 1))\
+        .add_edge(Edge('f', 'g', 4))\
+        .add_edge(Edge('g', 'h', 3))
 
 
 print "Graph:"
